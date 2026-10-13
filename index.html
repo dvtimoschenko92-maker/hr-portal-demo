@@ -1,0 +1,481 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#0b3441">
+  <meta name="description" content="Демонстрационный HR-портал: задачи, вопросы и анонимные обращения сотрудников.">
+  <title>HR Рядом — портал для сотрудников · Демо</title>
+  <style>
+    :root { --ink:#12323c; --slate:#52717a; --teal:#087e7b; --teal-dark:#086565; --line:#e1ebeb; --cloud:#f5f9f8; --warm:#faf7f1; --white:#fff; --shadow:0 22px 60px rgba(20,55,63,.08); }
+    * { box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+    body { margin:0; font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif; background:#f9fbfa; color:var(--ink); }
+    button,input,select,textarea { font:inherit; }
+    button { cursor:pointer; }
+    a { color:inherit; }
+    .container { width:min(1160px,calc(100% - 48px)); margin-inline:auto; }
+    .demo-banner { display:flex; gap:10px; align-items:center; justify-content:center; text-align:center; background:#e7f4f0; padding:9px 16px; color:#235e56; font-size:12px; font-weight:650; letter-spacing:.01em; }
+    .demo-dot { width:8px; height:8px; border-radius:99px; background:#24a28b; flex:none; }
+    .topbar { background:#fff; border-bottom:1px solid #eaf1ef; }
+    .navbar { min-height:82px; display:flex; align-items:center; justify-content:space-between; gap:24px; }
+    .brand { display:flex; align-items:center; text-decoration:none; gap:12px; flex:none; }
+    .brand-mark { height:42px; width:42px; border-radius:13px; background:var(--ink); display:grid; place-items:center; color:#fff; box-shadow:0 6px 16px rgba(11,52,65,.14); }
+    .brand-name { font-size:20px; font-weight:800; letter-spacing:-.7px; }
+    .brand-name em { font-style:normal; color:var(--teal); }
+    .brand-tagline { font-size:11px; color:#849a9b; letter-spacing:.015em; padding-top:2px; }
+    .nav-links { display:flex; align-items:center; gap:34px; }
+    .nav-links a { text-decoration:none; font-size:14px; color:#4d666c; font-weight:620; transition:color .2s; }
+    .nav-links a:hover { color:var(--teal); }
+    .nav-actions { display:flex; align-items:center; gap:10px; }
+    .button { appearance:none; border:0; display:inline-flex; align-items:center; justify-content:center; gap:10px; border-radius:12px; font-weight:720; white-space:nowrap; min-height:46px; padding:0 18px; transition:transform .15s, background .15s; }
+    .button:hover { transform:translateY(-1px); }
+    .button:focus-visible, a:focus-visible, .service-card:focus-visible, input:focus-visible,textarea:focus-visible, select:focus-visible { outline:3px solid #74c7b9; outline-offset:3px; }
+    .button-primary { background:var(--ink); color:#fff; }
+    .button-primary:hover { background:#154653; }
+    .button-soft { background:#e3f2ef; color:#166a62; }
+    .button-light { background:#fff; color:var(--ink); border:1px solid #dbe7e5; }
+    .button-plain { background:transparent; color:var(--ink); }
+    .mobile-menu { display:none; }
+    .hero { padding:76px 0 42px; overflow:hidden; }
+    .hero-grid { display:grid; grid-template-columns:1.09fr .91fr; gap:48px; align-items:center; }
+    .eyebrow { display:inline-flex; align-items:center; gap:8px; color:#087770; background:#e6f5f1; border:1px solid #d4ede7; padding:8px 13px; border-radius:99px; font-size:12px; font-weight:760; }
+    .eyebrow svg { height:14px; width:14px; }
+    h1 { font-size:clamp(43px,5.2vw,68px); letter-spacing:-3.3px; line-height:1.055; margin:22px 0 24px; font-weight:800; }
+    .accent { color:var(--teal); }
+    .hero-copy { max-width:560px; color:#5d7880; font-size:17px; line-height:1.75; margin:0 0 32px; }
+    .hero-buttons { display:flex; flex-wrap:wrap; gap:12px; }
+    .hero-buttons .button { min-height:53px; padding-inline:21px; }
+    .hero-note { display:flex; align-items:flex-start; gap:10px; margin-top:27px; font-size:13px; line-height:1.55; color:#71888a; max-width:480px; }
+    .hero-note svg { width:18px; height:18px; color:#398e87; flex:none; }
+    .illustration { position:relative; min-height:450px; border-radius:30px; background:linear-gradient(135deg,#e7f2ef 0%,#f8f7f0 72%); display:flex; align-items:center; justify-content:center; padding:30px; overflow:hidden; }
+    .illustration:before,.illustration:after { content:""; position:absolute; border:1px solid rgba(255,255,255,.75); border-radius:50%; width:530px; height:530px; left:-90px; top:-60px; }
+    .illustration:after { width:380px; height:380px; left:-10px; top:20px; }
+    .mockup { width:min(100%,420px); background:#fff; border-radius:19px; padding:21px; z-index:1; box-shadow:0 26px 58px rgba(30,74,75,.15); transform:rotate(-3deg); }
+    .mockup-top { display:flex; align-items:center; justify-content:space-between; padding-bottom:18px; border-bottom:1px solid #edf2f1; }
+    .mockup-heading { font-size:15px; font-weight:800; }
+    .mockup-pill { font-size:10px; background:#edf7f4; border-radius:8px; color:#268574; padding:7px 9px; font-weight:700; }
+    .mockup-welcome { margin:20px 0; font-size:23px; font-weight:800; letter-spacing:-.7px; }
+    .mockup-card { display:flex; gap:13px; align-items:center; border:1px solid #e7eeec; border-radius:12px; padding:13px; margin:9px 0; }
+    .mockup-icon { width:37px;height:37px;border-radius:10px;background:#e8f5f1;display:grid;place-items:center;color:#0c8176;flex:none; }
+    .mockup-icon.orange { color:#bd7231; background:#fff2e3; }
+    .mockup-icon.blue { color:#377aa2; background:#eaf3fa; }
+    .mockup-card strong { display:block; font-size:12px; }
+    .mockup-card span { color:#8ca2a0; font-size:10px; display:block; margin-top:4px; }
+    .floating-label { position:absolute; z-index:2; display:flex; gap:8px; align-items:center; padding:10px 15px; box-shadow:0 10px 32px rgba(37,75,70,.13); border-radius:12px; font-size:12px; background:#fff; font-weight:720; }
+    .float-one { top:45px; right:9px; transform:rotate(6deg); }
+    .float-two { bottom:37px; left:0; transform:rotate(-5deg); }
+    .f-icon { color:#1e9c82; }
+    .section-head { padding:36px 0 24px; display:flex; align-items:end; justify-content:space-between; gap:24px; }
+    .section-kicker { font-size:12px; font-weight:800; color:var(--teal); text-transform:uppercase; letter-spacing:1.7px; }
+    h2 { font-size:clamp(29px,3.4vw,40px); line-height:1.2; letter-spacing:-1.4px; margin:10px 0 0; }
+    .section-subtitle { color:#739098; max-width:330px; font-size:14px; line-height:1.7; }
+    .services { padding-bottom:80px; }
+    .cards { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:18px; }
+    .service-card { border:1px solid #e8eeec; text-align:left; background:#fff; min-height:275px; border-radius:19px; padding:28px; display:flex; flex-direction:column; align-items:start; position:relative; box-shadow:0 5px 17px rgba(28,62,58,.025); transition:transform .2s,box-shadow .2s,border-color .2s; }
+    .service-card:hover { transform:translateY(-4px); box-shadow:var(--shadow); border-color:#bddfd8; }
+    .service-icon { height:56px;width:56px;border-radius:15px;display:grid;place-items:center;background:#e5f4f0;color:#008374; }
+    .service-card:nth-child(2) .service-icon { background:#e9eff9;color:#487cb9; }
+    .service-card:nth-child(3) .service-icon { background:#fef0e9;color:#d2774b; }
+    .service-card h3 { margin:24px 0 10px; font-size:19px; letter-spacing:-.5px; }
+    .service-card p { color:#789099; font-size:14px; line-height:1.6; margin:0 0 22px; }
+    .card-footer { width:100%; display:flex; align-items:center; justify-content:space-between; gap:5px; margin-top:auto; }
+    .card-label { font-size:12px;color:#71878a; background:#f3f6f5;padding:7px 10px;border-radius:7px; }
+    .card-next { color:#0b7d77; font-size:24px; font-weight:500; }
+    .how-wrap { background:#ecf5f2; padding:60px 0 76px; }
+    .how-title { text-align:center; margin-bottom:36px; }
+    .how-title p { color:#71908e; font-size:14px; }
+    .steps { display:grid;grid-template-columns:repeat(3,1fr);gap:24px; }
+    .step { text-align:center; }
+    .step-number { width:42px;height:42px; margin:0 auto 16px;display:grid;place-items:center;border-radius:50%;background:#fff;color:#087e7b;font-weight:800;box-shadow:0 3px 15px rgba(12,67,63,.05); }
+    .step h3 { font-size:16px; margin:0 0 9px; }
+    .step p { color:#72918c; font-size:13px; line-height:1.7; max-width:290px; margin:0 auto; }
+    .privacy { padding:70px 0; }
+    .privacy-box { border:1px solid #dbe9e6;background:#fff;border-radius:22px;padding:34px;display:grid;grid-template-columns:60px 1fr;gap:24px; }
+    .privacy-shield { width:57px;height:57px;background:#edf7f3;border-radius:16px;display:grid;place-items:center;color:#0b8a7b; }
+    .privacy h2 { margin:0 0 13px;font-size:28px; }
+    .privacy p { color:#69858a; line-height:1.75; font-size:14px; max-width:850px; margin:0; }
+    .privacy strong { color:#21454b; }
+    .footer { background:#12343d; color:#fff; padding:26px 0; }
+    .footer-inner { display:flex;align-items:center;justify-content:space-between;gap:14px; }
+    .footer small { color:#b7c8c9; font-size:12px; }
+    .footer strong { font-size:17px; }
+    .footer strong em { font-style:normal;color:#6ee0ca; }
+    dialog { border:0; border-radius:24px; padding:0; width:min(560px,calc(100% - 24px)); max-height:calc(100dvh - 24px); background:#fff; color:var(--ink); box-shadow:0 35px 100px rgba(5,30,39,.25); overflow:auto; }
+    dialog::backdrop { background:rgba(7,39,49,.58); backdrop-filter:blur(5px); }
+    .dialog-inner { padding:30px; }
+    .dialog-header { display:flex;gap:10px;justify-content:space-between;align-items:flex-start;margin-bottom:22px; }
+    .dialog-header h2 { font-size:27px; margin:4px 0 9px; letter-spacing:-.7px; }
+    .dialog-header p { color:#6f868c; line-height:1.6; font-size:13px; margin:0; }
+    .icon-button { width:36px;height:36px;border-radius:10px;border:1px solid #e6eeee;background:#fff;font-size:20px;display:grid;place-items:center;flex:none; }
+    .notice { background:#fff6e9; border:1px solid #f4dfba; border-radius:12px; padding:14px; font-size:12px; line-height:1.6; color:#865a2d; margin-bottom:20px; }
+    .notice.green { background:#eaf6f1; border-color:#d1eadf; color:#26715c; }
+    .field { display:flex; flex-direction:column; gap:7px; margin-bottom:14px; }
+    .field label { font-size:13px; font-weight:700; }
+    .field input,.field select,.field textarea { width:100%; border:1px solid #d8e6e2; outline:none; border-radius:11px; padding:13px 14px; color:#203e43; background:#fff; font-size:14px; }
+    .field textarea { min-height:126px; resize:vertical; }
+    .field input:focus,.field select:focus,.field textarea:focus { border-color:#14a390; box-shadow:0 0 0 3px #e2f4ee; }
+    .field input::placeholder,.field textarea::placeholder { color:#9aa9aa; }
+    .form-actions { display:flex;gap:10px;flex-wrap:wrap;margin-top:20px; }
+    .form-result { display:none; padding:14px; background:#e9f6f0; border-radius:12px; margin-top:14px; color:#246c5e; font-size:13px; line-height:1.6; }
+    .form-result.visible { display:block; }
+    .demo-login { padding:20px; background:#f3f8f6; border-radius:15px; margin-top:18px; }
+    .demo-login p { margin:0 0 16px;color:#718889;line-height:1.65;font-size:14px; }
+    .small-print { font-size:12px; color:#81999a; line-height:1.6; margin-top:12px; }
+    .visually-hidden { position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0; }
+    @media(max-width:900px) { .nav-links { gap:17px; } .hero-grid { gap:24px; } .illustration { min-height:390px; } .float-one { right:0; } h1 { letter-spacing:-2px; } .hero-copy { font-size:15px; } .service-card { padding:21px; } }
+    @media(max-width:740px) { .container { width:min(100% - 30px,560px); } .navbar { min-height:70px; } .brand-name { font-size:18px; } .brand-tagline { font-size:10px; } .nav-links { display:none; } .nav-actions>.button { padding:0 12px;font-size:12px; } .hero { padding:45px 0 10px; } .hero-grid { grid-template-columns:1fr; } .hero-copy { font-size:16px; } h1 { font-size:47px; } .illustration { min-height:370px; margin-top:25px; } .mockup { max-width:340px; } .float-one { top:20px; } .float-two { bottom:20px;left:5px; } .section-head { flex-direction:column; align-items:start; gap:6px; } .section-head p { margin:0; } .cards { grid-template-columns:1fr; gap:13px; } .service-card { min-height:220px; } .service-card h3 { margin-top:17px; } .services { padding-bottom:48px; } .steps { grid-template-columns:1fr; gap:28px; } .how-wrap { padding:46px 0; } .privacy { padding:50px 0; } .privacy-box { grid-template-columns:1fr; padding:24px; gap:15px; } .footer-inner { flex-direction:column; align-items:start; } }
+    @media(max-width:420px) { .nav-actions>.button { font-size:11px; } .hero-buttons>.button { width:100%; } h1 { font-size:41px; } .illustration { padding:15px; min-height:335px; } .float-one { right:-5px; } .mockup { max-width:300px; } .dialog-inner { padding:22px; } }
+    /* HR task catalog and adaptive task creation form */
+    dialog.task-modal { width:min(850px,calc(100% - 24px)); }
+    .task-stepper { display:flex;align-items:center;justify-content:space-between;gap:8px;background:#f4f8f7;padding:12px;border-radius:13px;margin:0 0 23px; }
+    .task-stepper span { font-size:12px;color:#93a5a5;display:flex;align-items:center;gap:8px;font-weight:650; }
+    .task-stepper span b { width:25px;height:25px;border-radius:50%;display:grid;place-items:center;background:#e5eeeb;color:#839b96;font-size:12px; }
+    .task-stepper .current { color:#12685e; }
+    .task-stepper .current b { background:#167c72;color:#fff; }
+    .task-search-label { font-size:15px;font-weight:760;display:block;margin-bottom:10px; }
+    .task-search-wrap { display:flex;align-items:center;border:1px solid #ccdeda;background:#fff;border-radius:13px;padding:0 14px;gap:10px;margin-bottom:22px; }
+    .task-search-wrap:focus-within { outline:3px solid #ddf0e9;border-color:#209a85; }
+    .task-search-wrap span { color:#5d9388;font-size:26px;line-height:1; }
+    .task-search-wrap input { border:0;width:100%;height:48px;background:transparent;outline:0;color:var(--ink);font-size:14px; }
+    .task-search-wrap input::placeholder { color:#90a3a5; }
+    .task-mini-heading { font-size:12px;letter-spacing:.03em;font-weight:780;color:#67817f;margin:0 0 12px; }
+    .task-chips { display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px; }
+    .task-chips button { border-radius:99px;border:1px solid #d5e8e1;background:#f3f9f6;padding:9px 13px;color:#306c63;font-weight:650;font-size:12px;text-align:left;cursor:pointer; }
+    .task-chips button:hover { border-color:#97cbbd;background:#e9f4ee; }
+    .task-section-head { display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin:12px 0 15px; }
+    .task-section-head h3 { font-size:18px;letter-spacing:-.35px;margin:0; }
+    .task-section-head span { color:#81969a;font-size:12px; }
+    .task-groups { display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px; }
+    .task-group { border:1px solid #e1eae7;background:#fff;padding:15px 14px;display:flex;align-items:center;gap:12px;text-align:left;border-radius:14px;min-height:100px;cursor:pointer;transition:border .15s,background .15s,transform .15s; }
+    .task-group:hover { background:#f7fbf9;border-color:#99cbbf;transform:translateY(-1px); }
+    .task-group-icon { flex:0 0 42px;width:42px;height:42px;display:grid;place-items:center;background:#eaf5f1;border-radius:12px;font-size:22px; }
+    .task-group-copy { display:flex;flex:1;flex-direction:column;gap:4px;min-width:0; }
+    .task-group-copy strong { color:#1b3e45;font-size:14px;letter-spacing:-.25px; }
+    .task-group-copy small { color:#819499;font-size:11px;line-height:1.4; }
+    .task-group-count { color:#228378;font-size:10px;font-weight:750;margin-top:2px; }
+    .task-group-arrow { font-size:19px;color:#258378;flex:none; }
+    .task-back { padding:6px 0;border:0;background:transparent;color:#138579;font-size:13px;font-weight:760;margin-bottom:12px; }
+    .task-back:hover { text-decoration:underline; }
+    .task-selected-heading { display:flex;gap:14px;align-items:center;border-bottom:1px solid #e5eeeb;padding:0 0 17px;margin-bottom:10px; }
+    .task-selected-heading h3 { font-size:20px;margin:0 0 5px;letter-spacing:-.5px; }
+    .task-selected-heading p { color:#859a9b;font-size:13px;margin:0;line-height:1.5; }
+    .task-results { display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 12px; }
+    .task-option { background:#f8fbfa;border:1px solid #e0eae6;border-radius:11px;min-height:52px;width:100%;padding:13px 12px;display:flex;justify-content:space-between;align-items:center;gap:8px;text-align:left;font-size:13px;font-weight:670;color:#284c50; }
+    .task-option:hover { background:#edf8f3;border-color:#94c8b9; }
+    .task-option span:last-child { color:#188072;font-size:17px;flex:none; }
+    .task-result-category { font-size:10px;color:#7a9698;display:block;margin-bottom:3px; }
+    .task-empty { padding:25px 15px;background:#f4f9f7;border-radius:14px;text-align:center; }
+    .task-empty p { color:#789394;font-size:13px; }
+    .task-bottom-hint { color:#698589;font-size:13px;text-align:center;margin:22px 0 0; }
+    .task-bottom-hint button { border:0;padding:3px;background:transparent;color:#167c72;font-weight:750; }
+    .task-picked { display:flex;align-items:center;gap:13px;background:#f0f7f3;border:1px solid #d9e9e0;border-radius:14px;padding:14px;margin-bottom:22px; }
+    .task-picked div { display:flex;flex-direction:column;gap:4px; }
+    .task-picked small { color:#65887d;font-size:11px; }
+    .task-picked strong { font-size:15px; }
+    .required { color:#cf724b; }
+    .field-optional { color:#93a3a6;font-weight:450;font-size:11px; }
+    .task-two-col { display:grid;grid-template-columns:1fr 1fr;gap:13px; }
+    .conditional-block { background:#f9fbfa;padding:13px 14px 1px;margin:2px 0 17px;border:1px solid #e6edeb;border-radius:13px; }
+    .field-help { font-size:11px;line-height:1.55;color:#849b9a; }
+    .helper-note { font-size:12px;color:#976a41;background:#fff7ed;padding:11px 14px;border-radius:10px;margin:-2px 0 16px;line-height:1.6; }
+    .auth-tip { display:flex;gap:11px;align-items:start;background:#edf7f4;border-radius:13px;padding:13px 14px;color:#47726a;margin-top:2px; }
+    .auth-tip p { margin:0;font-size:12px;line-height:1.6; }
+    .task-confirm { margin:18px 0 4px;display:flex;gap:10px;align-items:flex-start;font-size:12px;line-height:1.6;color:#5d7978;cursor:pointer; }
+    .task-confirm input { margin-top:3px;flex:none;accent-color:#0b8175; }
+    .task-preview { margin-top:24px;border:1px solid #bcded2;border-radius:17px;padding:21px;background:#f4fbf8;scroll-margin-top:25px; }
+    .task-preview-header { display:flex;gap:12px;align-items:start; }
+    .task-preview-header strong { font-size:18px; }
+    .task-preview-header p { font-size:12px;line-height:1.55;color:#5d807b;margin:5px 0 14px; }
+    .task-preview-icon { flex:0 0 30px;width:30px;height:30px;display:grid;place-items:center;border-radius:50%;background:#138476;color:#fff;font-weight:850; }
+    .task-preview-list { background:#fff;border-radius:12px;border:1px solid #e0ede7;padding:4px 14px; }
+    .task-preview-list>div { padding:11px 0;border-bottom:1px solid #eaf1ef;display:grid;grid-template-columns:140px 1fr;gap:10px; }
+    .task-preview-list>div:last-child { border:0; }
+    .task-preview-list span { font-size:12px;color:#829b9a; }
+    .task-preview-list strong { font-size:13px;line-height:1.5;color:#31565a;font-weight:670;overflow-wrap:anywhere;white-space:pre-wrap; }
+    .task-preview-footer { display:flex;gap:9px;flex-wrap:wrap;margin-top:16px; }
+    #task-file-hint { display:block; }
+    [hidden] { display:none !important; }
+    @media(max-width:650px) {
+      dialog.task-modal { width:calc(100% - 16px);max-height:calc(100dvh - 16px);border-radius:18px; }
+      .task-groups,.task-results { grid-template-columns:1fr; }
+      .task-group { min-height:78px; }
+      .task-stepper { gap:4px;padding:9px; }
+      .task-stepper span { font-size:10px;gap:4px; }
+      .task-stepper span b { width:21px;height:21px;font-size:10px; }
+      .task-preview-list>div { grid-template-columns:1fr;gap:4px; }
+      .task-two-col { grid-template-columns:1fr;gap:0; }
+      .task-chips button { font-size:11px; }
+      .task-group-copy strong { font-size:13px; }
+      .task-selected-heading h3 { font-size:18px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="demo-banner" role="status"><span class="demo-dot" aria-hidden="true"></span> ДЕМО · 12 разделов и каталог HR-задач · данные не отправляются</div>
+  <header class="topbar">
+    <div class="container navbar">
+      <a class="brand" href="#top" aria-label="HR Рядом — на главную">
+        <span class="brand-mark" aria-hidden="true"><svg width="27" height="27" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M5 5v14M5 12h14M19 5v14"/></svg></span>
+        <span><span class="brand-name">HR <em>Рядом</em></span><span class="brand-tagline" style="display:block">Портал для сотрудников</span></span>
+      </a>
+      <nav class="nav-links" aria-label="Основное меню"><a href="#services">Возможности</a><a href="#how">Как это работает</a><a href="#privacy">Конфиденциальность</a></nav>
+      <div class="nav-actions"><button class="button button-primary" type="button" data-action="login">Войти в кабинет <span aria-hidden="true">↗</span></button></div>
+    </div>
+  </header>
+  <main id="top">
+    <section class="hero"><div class="container hero-grid">
+      <div>
+        <span class="eyebrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="m8.5 12 2.5 2.5 4.5-5"/></svg> HR-команда на связи</span>
+        <h1>Есть вопрос?<br><span class="accent">Мы рядом.</span></h1>
+        <p class="hero-copy">Рабочие вопросы не должны оставаться без ответа. Создайте задачу для HR, задайте вопрос или сообщите о проблеме через отдельную форму — в одном удобном месте.</p>
+        <div class="hero-buttons"><button type="button" class="button button-primary" data-action="task">Создать обращение <span aria-hidden="true">↗</span></button><button type="button" class="button button-light" data-action="complaint">Анонимное сообщение <span aria-hidden="true">→</span></button></div>
+        <div class="hero-note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/><path d="m9 12 2 2 4-4"/></svg><span>Для задач и вопросов предусмотрен вход сотрудника. Форма сообщения о проблеме доступна отдельно, без входа.</span></div>
+      </div>
+      <div class="illustration" aria-hidden="true">
+        <div class="floating-label float-one"><span class="f-icon">✓</span> Удобно и понятно</div>
+        <div class="mockup">
+          <div class="mockup-top"><span class="mockup-heading">Центр обращений</span><span class="mockup-pill">HR на связи</span></div>
+          <div class="mockup-welcome">Чем помочь?</div>
+          <div class="mockup-card"><span class="mockup-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 5h11v15H5V8z"/><path d="M8 5v3H5M9 12h6M9 16h5"/></svg></span><div><strong>Создать задачу</strong><span>Решение рабочих вопросов</span></div></div>
+          <div class="mockup-card"><span class="mockup-icon blue"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 11.5a8.5 8.5 0 0 1-8.5 8.5 9 9 0 0 1-4-.9L3 20l1-4.5A8.5 8.5 0 1 1 20 11.5Z"/><path d="M9 9a3 3 0 0 1 6 0c0 2-3 2-3 4m0 3h.01"/></svg></span><div><strong>Задать вопрос</strong><span>Спросить HR-специалиста</span></div></div>
+          <div class="mockup-card"><span class="mockup-icon orange"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/><path d="M12 8v5m0 3h.01"/></svg></span><div><strong>Сообщить о проблеме</strong><span>Отдельный канал обратной связи</span></div></div>
+        </div>
+        <div class="floating-label float-two"><span class="f-icon">●</span> Один портал для всех вопросов</div>
+      </div>
+    </div></section>
+    <section class="services container" id="services">
+      <div class="section-head"><div><span class="section-kicker">Обратная связь с HR</span><h2>Чем мы можем помочь?</h2></div><p class="section-subtitle">Выберите подходящий формат обращения. Мы позаботимся о том, чтобы путь был простым.</p></div>
+      <div class="cards">
+        <button class="service-card" type="button" data-action="task"><span class="service-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M8 5h11v15H5V8z"/><path d="M8 5v3H5M9 12h6M9 16h5"/></svg></span><h3>Создать задачу</h3><p>Выберите нужную HR-услугу из каталога: документы, отпуск, выплаты и многое другое.</p><span class="card-footer"><span class="card-label">12 разделов · подбор задачи</span><span class="card-next" aria-hidden="true">↗</span></span></button>
+        <button class="service-card" type="button" data-action="question"><span class="service-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M20 11.5a8.5 8.5 0 0 1-8.5 8.5 9 9 0 0 1-4-.9L3 20l1-4.5A8.5 8.5 0 1 1 20 11.5Z"/><path d="M9 9a3 3 0 0 1 6 0c0 2-3 2-3 4m0 3h.01"/></svg></span><h3>Задать вопрос</h3><p>Уточните информацию об отпуске, льготах, документах или внутренних процессах.</p><span class="card-footer"><span class="card-label">Для сотрудников · вход</span><span class="card-next" aria-hidden="true">↗</span></span></button>
+        <button class="service-card" type="button" data-action="complaint"><span class="service-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/><path d="M12 8v5m0 3h.01"/></svg></span><h3>Сообщить о проблеме</h3><p>Расскажите о сложной ситуации через отдельную форму без обязательного указания имени.</p><span class="card-footer"><span class="card-label">Без входа · конфиденциально*</span><span class="card-next" aria-hidden="true">↗</span></span></button>
+      </div>
+    </section>
+    <section class="how-wrap" id="how"><div class="container"><div class="how-title"><span class="section-kicker">Просто и быстро</span><h2>Как это будет работать</h2><p>Три шага от вопроса к решению — в будущей рабочей версии.</p></div><div class="steps"><div class="step"><div class="step-number">01</div><h3>Выберите тип обращения</h3><p>Задача, вопрос или отдельное сообщение о проблеме.</p></div><div class="step"><div class="step-number">02</div><h3>Опишите ситуацию</h3><p>Заполните понятную форму и отправьте её после запуска защищённой системы.</p></div><div class="step"><div class="step-number">03</div><h3>Получите результат</h3><p>Для задач и вопросов появятся статусы, уведомления и ответы HR.</p></div></div></div></section>
+    <section class="privacy container" id="privacy"><div class="privacy-box"><div class="privacy-shield"><svg width="31" height="31" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/><path d="m9 12 2 2 4-4"/></svg></div><div><h2>Важна конфиденциальность</h2><p><strong>В демонстрации ни одна форма не передаёт и не сохраняет данные.</strong> В рабочей версии мы разделим доступ к обычным и чувствительным обращениям, настроим защищённое хранение, права HR-специалистов и процедуру обработки сообщений. <strong>*Отсутствие входа само по себе не гарантирует техническую анонимность.</strong></p></div></div></section>
+  </main>
+  <footer class="footer"><div class="container footer-inner"><strong>HR <em>Рядом</em></strong><small>Демонстрационный прототип · 2026 · Не используйте для реальных обращений</small></div></footer>
+
+  <dialog id="portal-dialog" aria-labelledby="dialog-title"><div class="dialog-inner"><div class="dialog-header"><div><span class="section-kicker" id="dialog-tag">HR ПОРТАЛ</span><h2 id="dialog-title">Название</h2><p id="dialog-subtitle"></p></div><button type="button" class="icon-button" aria-label="Закрыть окно" id="close-dialog">×</button></div><div id="dialog-content"></div></div></dialog>
+  <script>
+  (() => {
+    'use strict';
+    const dialog = document.getElementById('portal-dialog');
+    const title = document.getElementById('dialog-title');
+    const subtitle = document.getElementById('dialog-subtitle');
+    const tag = document.getElementById('dialog-tag');
+    const content = document.getElementById('dialog-content');
+    const esc = v => String(v ?? '').replace(/[&<>"']/g, s => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[s]));
+    const mockNotice = '<div class="notice"><strong>Демо.</strong> Не вводите реальные личные данные. Формы ничего не отправляют и не сохраняют. Для рабочих задач потребуется вход сотрудника и защищённый сервер.</div>';
+    const catalog = [
+      {id:'documents',icon:'📄',name:'Справки и документы',desc:'Заказать, получить или исправить документ',items:[
+        'Справка с места работы','Справка о доходах и суммах налога','Справка о среднем заработке','Копия трудового договора','Копия дополнительного соглашения','Копия приказа','Сведения о трудовой деятельности (СТД-Р)','Выписка из кадровых документов','Дубликат утраченного документа','Исправление ошибки в кадровом документе','Другой кадровый документ']},
+      {id:'leave',icon:'🏖️',name:'Отпуска и отсутствие',desc:'Оформить отпуск, отгул или исправить отсутствие',items:[
+        'Ежегодный оплачиваемый отпуск','Перенос или изменение дат отпуска','Узнать остаток дней отпуска','Отпуск без сохранения зарплаты','Учебный отпуск','Дополнительный отпуск','Отгул / день отдыха','Больничный / временная нетрудоспособность','Отпуск по беременности и родам','Отпуск по уходу за ребёнком','Донорские дни','Корректировка отсутствия']},
+      {id:'pay',icon:'💳',name:'Зарплата и выплаты',desc:'Разобраться с начислениями и компенсациями',items:[
+        'Получить расчётный листок','Проверить начисление зарплаты','Ошибка в зарплате / недоплата','Вопрос по премии или бонусу','Выплата отпускных','Оплата больничного','Компенсация за неиспользованный отпуск','Налоговые вычеты','Удержания из зарплаты','Изменение зарплатных реквизитов','Материальная помощь','Иная выплата или компенсация']},
+      {id:'personnel',icon:'👤',name:'Личные и кадровые данные',desc:'Обновить данные или оформить изменение условий',items:[
+        'Изменить контактные данные','Смена фамилии, имени или отчества','Изменить адрес проживания','Обновить персональные данные','Перевод в другое подразделение','Изменение должности','Изменение условий трудового договора','Совместительство / совмещение','Изменение ставки или нагрузки','Другие кадровые изменения']},
+      {id:'schedule',icon:'🕒',name:'График и условия работы',desc:'Рабочее время, смены и формат работы',items:[
+        'Изменение графика работы','Обмен сменами','Ошибка в табеле учёта времени','Сверхурочная работа / переработки','Неполное рабочее время','Дистанционная / гибридная работа','Изменение рабочего места','Вопрос по условиям труда','Оформление пропуска через HR','Другое по графику и режиму']},
+      {id:'benefits',icon:'💚',name:'Льготы и поддержка',desc:'Корпоративные программы и социальные льготы',items:[
+        'Добровольное медицинское страхование (ДМС)','Подключить или изменить льготу','Компенсация питания','Компенсация проезда','Корпоративная мобильная связь','Корпоративные скидки и программы','Подарки и поддержка семей сотрудников','Материальная помощь по жизненным обстоятельствам','Пенсионная программа','Другая льгота']},
+      {id:'development',icon:'🎓',name:'Обучение и карьера',desc:'Курсы, оценка, развитие и новые возможности',items:[
+        'Запись на внутреннее обучение','Заявка на внешнее обучение','Оплата курса или сертификации','Получить доступ к обучающей платформе','Согласовать индивидуальный план развития','Карьерная консультация','Внутренняя вакансия / перевод','Оценка и аттестация','Назначение наставника','Другая задача по развитию']},
+      {id:'onboarding',icon:'🌱',name:'Адаптация',desc:'Задачи новых сотрудников',items:[
+        'Документы при приёме на работу','Вопрос по первому рабочему дню','Помощь в адаптации','Назначить наставника','Вопрос по испытательному сроку','Получить правила и регламенты компании','Проблема с кадровым оформлением при приёме']},
+      {id:'offboarding',icon:'🚪',name:'Увольнение',desc:'Оформление выхода из компании',items:[
+        'Оформить заявление на увольнение','Согласовать дату увольнения','Запросить документы при увольнении','Вопрос по окончательному расчёту','Обходной лист / возврат имущества','Другая задача при увольнении']},
+      {id:'trips',icon:'🧳',name:'Командировки',desc:'Оформление поездок и возмещение расходов',items:[
+        'Оформить командировку','Изменить или отменить командировку','Командировочные документы','Аванс на командировку','Возмещение командировочных расходов','Суточные / расчёт командировочных']},
+      {id:'hrsystems',icon:'⚙️',name:'HR-сервисы и обращения',desc:'Кадровые системы, процедуры и HR-помощь',items:[
+        'Доступ к кадровой системе','Ошибка в HR-системе','Восстановить доступ к HR-сервису','Вопрос по внутреннему регламенту','Идея по улучшению HR-процесса','Записаться на встречу с HR','Исправить статус предыдущего обращения','Другое обращение в HR']},
+      {id:'other',icon:'✨',name:'Другая задача',desc:'Если подходящей темы не нашлось',items:['Другая задача для HR']}
+    ];
+    const byId = new Map();
+    for (const group of catalog) group.items.forEach((label, index) => byId.set(`${group.id}:${index}`, {key:`${group.id}:${index}`,group,label}));
+    const totalTypes = byId.size;
+    const quickKeys = ['documents:0','leave:0','pay:2','schedule:2','benefits:0','other:0'];
+    let activeGroup = null;
+    let currentSearch = '';
+    let intendedAction = 'task';
+
+    function show(){ if (!dialog.open) dialog.showModal(); }
+    function setDialog({scope, heading, text, wide=false}) {
+      tag.textContent = scope; title.textContent = heading; subtitle.textContent = text;
+      dialog.classList.toggle('task-modal',wide);
+      show();
+    }
+    function stepper(active) {
+      return `<div class="task-stepper" aria-label="Этапы создания задачи">
+        <span class="${active===1?'current':''}"><b>1</b> Выбор задачи</span>
+        <span class="${active===2?'current':''}"><b>2</b> Описание</span>
+        <span class="${active===3?'current':''}"><b>3</b> Проверка</span>
+      </div>`;
+    }
+    function catalogTile(group){
+      return `<button type="button" class="task-group" data-group="${group.id}"><span class="task-group-icon" aria-hidden="true">${group.icon}</span><span class="task-group-copy"><strong>${esc(group.name)}</strong><small>${esc(group.desc)}</small><span class="task-group-count">${group.items.length} видов задач</span></span><span class="task-group-arrow" aria-hidden="true">→</span></button>`;
+    }
+    function catalogOption(item){
+      return `<button type="button" class="task-option" data-task="${item.key}"><span>${esc(item.label)}</span><span aria-hidden="true">→</span></button>`;
+    }
+    function drawCatalogResults(){
+      const target = document.getElementById('catalog-results');
+      if (!target) return;
+      const term = currentSearch.toLocaleLowerCase('ru').trim();
+      const quick = document.getElementById('task-quick');
+      if (quick) quick.hidden = Boolean(term || activeGroup);
+      if (term) {
+        const matches = [...byId.values()].filter(item => `${item.label} ${item.group.name} ${item.group.desc}`.toLocaleLowerCase('ru').includes(term));
+        target.innerHTML = `<div class="task-section-head"><h3>Результаты поиска</h3><span>${matches.length} найдено</span></div>` +
+          (matches.length ? `<div class="task-results">${matches.map(item=>`<div><span class="task-result-category">${esc(item.group.name)}</span>${catalogOption(item)}</div>`).join('')}</div>` : '<div class="task-empty"><strong>Пока ничего не нашли</strong><p>Попробуйте другие слова или создайте задачу в свободной форме.</p><button class="button button-soft" type="button" data-task="other:0">Другая задача →</button></div>');
+        return;
+      }
+      if (activeGroup) {
+        const group = catalog.find(x=>x.id===activeGroup);
+        if (!group) return;
+        target.innerHTML = `<button type="button" class="task-back" data-back-groups>← Все разделы</button><div class="task-selected-heading"><span class="task-group-icon" aria-hidden="true">${group.icon}</span><div><h3>${esc(group.name)}</h3><p>${esc(group.desc)}</p></div></div><div class="task-results">${group.items.map((label,i)=>catalogOption(byId.get(`${group.id}:${i}`))).join('')}</div>`;
+        return;
+      }
+      target.innerHTML = `<div class="task-section-head"><h3>Все разделы</h3><span>${catalog.length} разделов · ${totalTypes} видов задач</span></div><div class="task-groups">${catalog.map(catalogTile).join('')}</div><p class="task-bottom-hint">Не знаете, что выбрать? <button type="button" data-task="other:0">Опишите задачу своими словами →</button></p>`;
+    }
+    function openTaskCatalog(){
+      activeGroup = null; currentSearch='';
+      setDialog({scope:'HR-СЕРВИСЫ · КАТАЛОГ',heading:'Создать HR-задачу',text:'Найдите нужную услугу или выберите раздел. После выбора откроется форма задачи.',wide:true});
+      content.innerHTML = `${mockNotice}${stepper(1)}
+        <label class="task-search-label" for="task-search">Какую задачу нужно решить?</label>
+        <div class="task-search-wrap"><span aria-hidden="true">⌕</span><input id="task-search" type="search" autocomplete="off" placeholder="Например: справка, отпуск, премия, смена графика"></div>
+        <div id="task-quick"><p class="task-mini-heading">Часто выбирают</p><div class="task-chips">${quickKeys.map(key=>`<button type="button" data-task="${key}">${esc(byId.get(key).label)}</button>`).join('')}</div></div>
+        <div id="catalog-results"></div>`;
+      drawCatalogResults();
+      dialog.scrollTop = 0;
+    }
+    function showGroup(groupId){
+      activeGroup=groupId;
+      currentSearch='';
+      const input=document.getElementById('task-search'); if(input) input.value='';
+      drawCatalogResults();
+      const results=document.getElementById('catalog-results'); if(results) results.scrollIntoView({block:'nearest',behavior:'smooth'});
+    }
+    function conditionalFields(groupId) {
+      const dateField = (id,label,type='date') => `<div class="field"><label for="${id}">${label} <span class="field-optional">необязательно</span></label><input id="${id}" name="${id}" type="${type}"></div>`;
+      const period = (label='Период') => `<div class="conditional-block"><p class="task-mini-heading">${label}</p><div class="task-two-col">${dateField('dateFrom','С')}${dateField('dateTo','По')}</div></div>`;
+      switch (groupId) {
+        case 'documents': return `<div class="field"><label for="delivery">Как удобнее получить документ?</label><select id="delivery" name="delivery"><option value="">Не имеет значения</option><option>Электронно</option><option>На бумаге</option></select></div>`;
+        case 'leave': return period('Желаемые даты отпуска или отсутствия');
+        case 'pay': return dateField('payMonth','За какой месяц или период начисления?','month');
+        case 'personnel': return `${dateField('effectiveDate','Желаемая дата изменения')}<div class="helper-note">Не указывайте здесь паспортные данные, СНИЛС или платёжные реквизиты. Для их передачи будет отдельный защищённый процесс.</div>`;
+        case 'schedule': return period('Желаемый период изменения графика');
+        case 'benefits': return dateField('effectiveDate','Когда нужна льгота или компенсация?');
+        case 'development': return `<div class="field"><label for="courseName">Курс, программа или направление <span class="field-optional">необязательно</span></label><input id="courseName" name="courseName" maxlength="100" placeholder="Например: Excel для аналитики"></div>`;
+        case 'onboarding': return dateField('effectiveDate','Дата выхода или события');
+        case 'offboarding': return dateField('effectiveDate','Предполагаемая дата');
+        case 'trips': return `${period('Период командировки')}<div class="field"><label for="destination">Город назначения <span class="field-optional">необязательно</span></label><input id="destination" name="destination" maxlength="80" placeholder="Например: Казань"></div>`;
+        case 'hrsystems': return `<div class="field"><label for="serviceName">Какой сервис или процесс? <span class="field-optional">необязательно</span></label><input id="serviceName" name="serviceName" maxlength="100" placeholder="Название HR-системы или процесса"></div>`;
+        default: return '';
+      }
+    }
+    function openTaskForm(key){
+      const item = byId.get(key);
+      if (!item) return;
+      setDialog({scope:'НОВАЯ ЗАДАЧА · ДЕМО',heading:'Опишите задачу',text:`${item.group.name} → ${item.label}`,wide:true});
+      content.innerHTML = `${mockNotice}${stepper(2)}
+        <button type="button" class="task-back" id="back-to-catalog">← Выбрать другую задачу</button>
+        <div class="task-picked"><span class="task-group-icon" aria-hidden="true">${item.group.icon}</span><div><small>${esc(item.group.name)}</small><strong>${esc(item.label)}</strong></div></div>
+        <form id="task-form">
+          <div class="field"><label for="taskTitle">Название задачи <span class="required">*</span></label><input id="taskTitle" name="taskTitle" required maxlength="120" value="${esc(item.label)}" placeholder="Кратко опишите задачу"></div>
+          ${conditionalFields(item.group.id)}
+          <div class="field"><label for="taskDescription">Подробности задачи <span class="required">*</span></label><textarea id="taskDescription" name="taskDescription" rows="5" required maxlength="2500" placeholder="Что нужно сделать? Укажите важные обстоятельства и желаемый результат. Только вымышленные данные для демонстрации."></textarea><small class="field-help">Не указывайте реальные персональные или конфиденциальные сведения.</small></div>
+          <div class="task-two-col"><div class="field"><label for="desiredDate">Желаемый срок <span class="field-optional">необязательно</span></label><input id="desiredDate" name="desiredDate" type="date"></div><div class="field"><label for="priority">Приоритет</label><select id="priority" name="priority"><option>Обычный</option><option>Желательно быстрее</option><option>Срочно</option></select></div></div>
+          <div class="field"><label for="taskFile">Приложить документы <span class="field-optional">демо</span></label><input type="file" id="taskFile" multiple accept=".pdf,.doc,.docx,.xls,.xlsx,.jpg,.jpeg,.png"><small class="field-help" id="task-file-hint">Можно выбрать файлы для проверки интерфейса. Они не загружаются и не сохраняются.</small></div>
+          <div class="auth-tip"><span aria-hidden="true">🔒</span><p>В рабочей версии перед отправкой потребуется вход через корпоративную учётную запись. ФИО и рабочие контакты будут подставляться из профиля, без повторного ввода.</p></div>
+          <label class="task-confirm"><input type="checkbox" name="testOnly" required><span>Подтверждаю, что ввожу <strong>только тестовые данные</strong> для проверки макета.</span></label>
+          <div class="form-actions"><button class="button button-primary" type="submit">Проверить задачу →</button><button class="button button-light" type="button" id="task-cancel">Отмена</button></div>
+        </form>
+        <div id="task-preview" class="task-preview" role="status" aria-live="polite" hidden></div>`;
+      document.getElementById('back-to-catalog').addEventListener('click',openTaskCatalog);
+      document.getElementById('task-cancel').addEventListener('click',()=>dialog.close());
+      document.getElementById('taskFile').addEventListener('change',event=>{
+        const files=[...event.target.files];
+        const hint=document.getElementById('task-file-hint');
+        hint.textContent=files.length ? `Выбрано файлов: ${files.length}. Они остаются только в этом окне браузера и не загружаются.` : 'Можно выбрать файлы для проверки интерфейса. Они не загружаются и не сохраняются.';
+        const tooLarge=files.find(file=>file.size>10*1024*1024);
+        if(tooLarge){ hint.textContent='Для будущей версии предусмотрим лимит 10 МБ на файл. Сейчас файл слишком большой для примера.'; event.target.value=''; }
+      });
+      document.getElementById('task-form').addEventListener('submit',ev=>{
+        ev.preventDefault();
+        const form=ev.currentTarget;
+        if(!form.reportValidity())return;
+        const fd=new FormData(form);
+        if(fd.get('dateFrom') && fd.get('dateTo') && fd.get('dateFrom')>fd.get('dateTo')){
+          document.getElementById('dateTo').setCustomValidity('Дата окончания должна быть не раньше даты начала');
+          document.getElementById('dateTo').reportValidity();
+          document.getElementById('dateTo').setCustomValidity('');
+          return;
+        }
+        const fields=[['Категория',item.group.name],['Вид задачи',item.label],['Название',fd.get('taskTitle')],['Описание',fd.get('taskDescription')]];
+        for(const [name,label] of [['dateFrom','Дата с'],['dateTo','Дата по'],['payMonth','Период начисления'],['delivery','Формат получения'],['effectiveDate','Дата изменения'],['courseName','Программа'],['destination','Город'],['serviceName','Сервис'],['desiredDate','Желаемый срок']]){
+          const value=fd.get(name); if(value)fields.push([label,value]);
+        }
+        fields.push(['Приоритет',fd.get('priority')]);
+        const numFiles=document.getElementById('taskFile').files.length;
+        if(numFiles)fields.push(['Вложения',`${numFiles} файл(ов), не загружены`]);
+        const preview=document.getElementById('task-preview');
+        preview.hidden=false;
+        preview.innerHTML=`<div class="task-preview-header"><span class="task-preview-icon">✓</span><div><strong>Черновик задачи проверен</strong><p>Демонстрация: заявка не зарегистрирована, HR её не получил.</p></div></div><div class="task-preview-list">${fields.map(([label,value])=>`<div><span>${esc(label)}</span><strong>${esc(value)}</strong></div>`).join('')}</div><div class="task-preview-footer"><button class="button button-light" type="button" id="edit-task">Изменить данные</button><button class="button button-primary" type="button" id="another-task">Новая задача →</button></div>`;
+        document.getElementById('edit-task').addEventListener('click',()=>{preview.hidden=true;document.getElementById('taskTitle').focus();});
+        document.getElementById('another-task').addEventListener('click',openTaskCatalog);
+        preview.scrollIntoView({behavior:'smooth',block:'start'});
+      });
+      dialog.scrollTop = 0;
+    }
+    function openLogin(action){
+      intendedAction = action || 'task';
+      setDialog({scope:'ДОСТУП СОТРУДНИКА',heading:'Вход в HR-портал',text:'В рабочей версии задачи и вопросы будут доступны после корпоративной авторизации.'});
+      content.innerHTML='<div class="notice green">Этот экран — макет. Настоящая авторизация и личные кабинеты пока не подключены.</div><div class="demo-login"><p>Здесь появится безопасный вход через корпоративную учётную запись. Сейчас можно перейти к демонстрационной форме без пароля.</p><button class="button button-primary" type="button" id="continue-demo">Посмотреть форму →</button></div><p class="small-print">Пароли на демонстрационном сайте не запрашиваются.</p>';
+      document.getElementById('continue-demo').addEventListener('click',()=>intendedAction==='task'?openTaskCatalog():openForm('question'));
+    }
+    function openForm(action){
+      const complaint=action==='complaint';
+      setDialog({scope:complaint?'ОТДЕЛЬНЫЙ КАНАЛ · БЕЗ ВХОДА':'ОБРАЩЕНИЕ СОТРУДНИКА',heading:complaint?'Сообщить о проблеме':'Задать вопрос',text:complaint?'Предпросмотр отдельной формы. Она не требует входа, но техническая анонимность ещё не реализована.':'Предпросмотр формы вопроса, которая будет доступна сотрудникам после входа.'});
+      const fields=complaint ? '<div class="field"><label for="topic">Категория сообщения</label><select id="topic" required><option value="">Выберите тему</option><option>Нарушение этики</option><option>Конфликт или давление</option><option>Дискриминация или домогательства</option><option>Другое</option></select></div>' : '<div class="field"><label for="topic">Тема вопроса</label><select id="topic" required><option value="">Выберите тему</option><option>Отпуск</option><option>Льготы и компенсации</option><option>Корпоративные процессы</option><option>Другое</option></select></div>';
+      const extra=complaint?'<p class="small-print">Не указывайте сведения, которые могут раскрыть вашу личность, если хотите сохранить анонимность. Для полноценной анонимности нужна отдельная защищённая инфраструктура.</p>':'';
+      content.innerHTML = mockNotice + '<form id="demo-form">'+fields+'<div class="field"><label for="message">'+(complaint?'Опишите ситуацию':'Ваш вопрос')+'</label><textarea id="message" maxlength="1000" required placeholder="Для проверки используйте только вымышленные данные"></textarea></div>'+extra+'<div class="form-actions"><button class="button button-primary" type="submit">Проверить заполнение</button><button class="button button-light" type="button" id="demo-back">Закрыть</button></div><div role="status" class="form-result" id="form-result"></div></form>';
+      dialog.scrollTop = 0;
+      document.getElementById('demo-back').addEventListener('click',()=>dialog.close());
+      document.getElementById('demo-form').addEventListener('submit',ev=>{
+        ev.preventDefault(); if(!ev.currentTarget.reportValidity())return;
+        const result=document.getElementById('form-result');
+        result.textContent='✓ Поля заполнены. Это только демонстрация: данные никуда не отправлены и не сохранены.';
+        result.classList.add('visible'); ev.currentTarget.reset();
+      });
+    }
+    document.querySelectorAll('[data-action]').forEach(button=>button.addEventListener('click',()=>{
+      const action=button.dataset.action;
+      if(action==='task')openTaskCatalog();
+      else if(action==='complaint')openForm('complaint');
+      else if(action==='question')openLogin('question');
+      else openLogin('task');
+    }));
+    content.addEventListener('click',event=>{
+      const groupButton=event.target.closest('[data-group]');
+      if(groupButton){showGroup(groupButton.dataset.group);return;}
+      const taskButton=event.target.closest('[data-task]');
+      if(taskButton){openTaskForm(taskButton.dataset.task);return;}
+      const back=event.target.closest('[data-back-groups]');
+      if(back){showGroup(null);return;}
+    });
+    content.addEventListener('input',event=>{
+      if(event.target.id==='task-search'){
+        currentSearch=event.target.value; activeGroup=null; drawCatalogResults();
+      }
+    });
+    document.getElementById('close-dialog').addEventListener('click',()=>dialog.close());
+    dialog.addEventListener('click',event=>{if(event.target===dialog)dialog.close();});
+  })();
+  </script>
+
+</body>
+</html>
